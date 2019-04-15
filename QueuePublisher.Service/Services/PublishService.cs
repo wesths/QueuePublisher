@@ -1,5 +1,4 @@
-﻿using QueuePublisher.Infrastructure.Repositories.QueueRepo;
-using QueuePublisher.Infrastructure.Repositories.QueueRepo.Contracts;
+﻿using QueuePublisher.Infrastructure.Repositories.QueueRepo.Contracts;
 using QueuePublisher.Interface.Contracts;
 using QueuePublisher.Interface.Contracts.PublishService;
 using System;
