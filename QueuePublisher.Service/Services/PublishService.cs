@@ -2,6 +2,7 @@
 using QueuePublisher.Infrastructure.Repositories.QueueRepo.Contracts;
 using QueuePublisher.Interface.Contracts;
 using QueuePublisher.Interface.Contracts.PublishService;
+using System;
 
 namespace QueuePublisher.Service.Services
 {
@@ -18,13 +19,20 @@ namespace QueuePublisher.Service.Services
 
         public void Publish(string message)
         {
-            _queuePublishRepo.PublishMessage(ConvertNameToPhrase(message));
+            if (_validationService.ValidateMessage(message))
+            {
+                _queuePublishRepo.PublishMessage(ConvertNameToPhrase(message));
+                Console.WriteLine($"Name: {message} sent to Rabbit");
+            }
+            else
+            {
+                Console.WriteLine("Please enter a name.");
+            }
         }
 
         private string ConvertNameToPhrase(string message)
         {
-            return _validationService.ValidateMessage(message) ? $"Hello my name is, {message}" : "Please enter a name.";
-           
+            return $"Hello my name is, {message}";           
         }
     }
 }
