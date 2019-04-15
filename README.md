@@ -14,4 +14,20 @@ Run the docker image in a container
 In a browser go to http://localhost:8081. You sould see the management log in screen for RabbitMQ. Use the default username and password "guest"
 
 ## Run the app
-This is a .Net Core 2.0 console application. Ensure you are running .Net Core 2.0 and open the solution in Visual Studio. Build and Run the application. The console application will appear and allow you to enter a name. This name will be converted into a "Hi my name is, {name}" and sent to RabbitMQ.
+This is a .Net Core 2.0 console application. 
+
+- Clone the repo to a local directory (e.g. c:\git\myrepo)
+- Go to powershell or command line to that directory and build the application
+
+`dotnet build`
+- Once the application has been build successfully, publish the application 
+
+`dotnet publish QueuePublisher/QueuePublishe.csproj -c Release -o /mypubapp`
+- Once successfully published go to the directory where your project was published to 
+
+`cd /mysubapp`
+- Run the following command to start the console application and publish messages/names to RabbitMQ.
+
+`dotnet .\QueuePublisher.dll`
+
+The console application will appear and allow you to enter a name. This name will be converted into a "Hi my name is, {name}" and sent to RabbitMQ.
