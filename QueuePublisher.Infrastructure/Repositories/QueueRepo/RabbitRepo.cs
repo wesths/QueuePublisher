@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
+using QueuePublisher.Infrastructure.Repositories.QueueRepo.Contracts;
 using RabbitMQ.Client;
 using System;
 using System.Text;
@@ -21,23 +22,23 @@ namespace QueuePublisher.Infrastructure.Repositories.QueueRepo
 
         private IConnection CreateConnectionFactory()
         {
+            var factory = new ConnectionFactory()
+            {
+                // "guest"/"guest" by default, limited to localhost connections
+                UserName = _configuration.GetSection("AppSettings:QueueUser").Value,
+                Password = _configuration.GetSection("AppSettings:QueuePassword").Value,
+                HostName = _configuration.GetSection("AppSettings:QueueHostName").Value
+            };
 
-            ConnectionFactory factory = new ConnectionFactory();
-            // "guest"/"guest" by default, limited to localhost connections
-            factory.UserName = _configuration.GetSection("AppSettings:QueueUser").Value;
-            factory.Password = _configuration.GetSection("AppSettings:QueuePassword").Value;
-            factory.HostName = _configuration.GetSection("AppSettings:QueueHostName").Value;
-
-            IConnection conn = factory.CreateConnection();
-
+            conn = factory.CreateConnection();
+            
             return conn;
         }
 
         public bool PublishMessage(string message)
         {
             byte[] messageBytes = Encoding.UTF8.GetBytes(message);
-            channel.BasicPublish("", _configuration.GetSection("AppSettings:QueueName").Value, null, messageBytes);
-            Console.WriteLine($"Message sent to queue: {message}");
+            channel.BasicPublish("", _configuration.GetSection("AppSettings:QueueName").Value, null, messageBytes);            
             return true;
         }
     }

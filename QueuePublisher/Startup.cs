@@ -1,8 +1,10 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using QueuePublisher.Infrastructure.Repositories.QueueRepo;
+using QueuePublisher.Infrastructure.Repositories.QueueRepo.Contracts;
+using QueuePublisher.Interface.Contracts;
 using QueuePublisher.Interface.Contracts.PublishService;
-using QueuePublisher.Service.PublishService;
+using QueuePublisher.Service.Services;
 using System.IO;
 
 namespace QueuePublisher
@@ -24,7 +26,8 @@ namespace QueuePublisher
         {
             services.AddSingleton(Configuration);
             services.AddTransient<IQueuePublishRepo, RabbitRepo>();
-            services.AddTransient<IPublishService, PublishService>();
+            services.AddTransient<IValidationService, ValidationService>();
+            services.AddSingleton<IPublishService, PublishService>();
 
             return services;
 

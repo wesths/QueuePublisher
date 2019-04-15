@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace QueuePublisher.Infrastructure.Repositories.QueueRepo
+namespace QueuePublisher.Infrastructure.Repositories.QueueRepo.Contracts
 {
     public interface IQueuePublishRepo
     {
